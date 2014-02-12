@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 
 namespace GameOfLife
 {
@@ -32,19 +31,6 @@ namespace GameOfLife
             }
         }
 
-        public int NoOfLiveCells()
-        {
-            var cells = new List<Cell>();
-
-            foreach (Cell cell in Life)
-            {
-                if (cell.IsAlive())
-                    cells.Add(cell);
-            }
-
-            return cells.Count;
-        }
-
         public void Tick()
         {
             NextLife = new Cell[Size, Size];
@@ -61,7 +47,7 @@ namespace GameOfLife
             Life = NextLife;
         }
 
-        public void SwitchOn(int x, int y)
+        public void BringCellToLifeAt(int x, int y)
         {
             Cell aliveCell = _cellFactory.CreateAliveCell(x, y);
             Life[x, y] = aliveCell;

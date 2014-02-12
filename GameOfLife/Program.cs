@@ -22,7 +22,7 @@ namespace GameOfLife
             var game = new Game(60, new CellFactory());
             foreach (Point point in GetSeed())
             {
-                game.SwitchOn(point.X, point.Y);
+                game.BringCellToLifeAt(point.X, point.Y);
             }
 
             for (int i = 0; i < noOfTicks; i++)

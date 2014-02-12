@@ -25,7 +25,7 @@ namespace GameOfLife
 
             foreach (Cell cell in life)
             {
-                if (cell.IsAlive() && !ThisIsSameAs(cell))
+                if (cell.IsAlive() && !cell.IsSameAs(this))
                 {
                     int xDistanceFromCell = X - cell.X;
                     int yDistanceFromCell = Y - cell.Y;
@@ -38,9 +38,9 @@ namespace GameOfLife
             return liveNeighbours.Count;
         }
 
-        private bool ThisIsSameAs(Cell cell)
+        private bool IsSameAs(Cell cell)
         {
-            return cell.X == X && cell.Y == Y;
+            return cell.X == this.X && cell.Y == this.Y;
         }
 
         public Cell Evolve(int noOfLiveNeighbours)

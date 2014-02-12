@@ -5,15 +5,17 @@ namespace GameOfLife.Test
     public class WhenGameStarts
     {
         [Fact]
-        public void CellsCanBeSwitchedOn()
+        public void CellsCanBeBroughtToLife()
         {
             var game = new Game(3, new CellFactory());
 
-            game.SwitchOn(0, 0);
-            game.SwitchOn(0, 1);
-            game.SwitchOn(1, 1);
+            game.BringCellToLifeAt(0, 0);
+            game.BringCellToLifeAt(0, 1);
+            game.BringCellToLifeAt(1, 1);
 
-            Assert.Equal(3, game.NoOfLiveCells());
+            Assert.True(game.Life[0, 0].IsAlive());
+            Assert.True(game.Life[0, 1].IsAlive());
+            Assert.True(game.Life[1, 1].IsAlive());
         }
     }
 
@@ -23,12 +25,12 @@ namespace GameOfLife.Test
         public void AnyLiveCellWithMoreThanThreeLiveNeighboursDies()
         {
             var game = new Game(3, new CellFactory());
-            
-            game.SwitchOn(0, 1);
-            game.SwitchOn(0, 2);
-            game.SwitchOn(1, 0);
-            game.SwitchOn(1, 1);
-            game.SwitchOn(1, 2);
+
+            game.BringCellToLifeAt(0, 1);
+            game.BringCellToLifeAt(0, 2);
+            game.BringCellToLifeAt(1, 0);
+            game.BringCellToLifeAt(1, 1);
+            game.BringCellToLifeAt(1, 2);
 
             game.Tick();
 
@@ -48,9 +50,9 @@ namespace GameOfLife.Test
         public void AnyLiveCellWithTwoOrThreeThreeLiveNeighboursLivesOn()
         {
             var game = new Game(3, new CellFactory());
-            game.SwitchOn(0, 0);
-            game.SwitchOn(0, 1);
-            game.SwitchOn(1, 1);
+            game.BringCellToLifeAt(0, 0);
+            game.BringCellToLifeAt(0, 1);
+            game.BringCellToLifeAt(1, 1);
 
             game.Tick();
 
@@ -63,9 +65,9 @@ namespace GameOfLife.Test
         public void AnyDeadCellWithExactlyThreeLiveNeighboursBecomesAlive()
         {
             var game = new Game(3, new CellFactory());
-            game.SwitchOn(0, 0);
-            game.SwitchOn(0, 1);
-            game.SwitchOn(1, 1);
+            game.BringCellToLifeAt(0, 0);
+            game.BringCellToLifeAt(0, 1);
+            game.BringCellToLifeAt(1, 1);
 
             game.Tick();
             Assert.True(game.NextLife[1, 0].IsAlive());
