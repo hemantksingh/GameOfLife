@@ -42,12 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AliveCell.cs" />
     <Compile Include="Cell.cs" />
-    <Compile Include="CellFactory.cs" />
-    <Compile Include="DeadCell.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="ICellFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

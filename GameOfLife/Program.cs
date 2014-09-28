@@ -19,7 +19,7 @@ namespace GameOfLife
                 return;
             }
             
-            var game = new Game(60, new CellFactory());
+            var game = new Game(60);
             foreach (Point point in GetSeed())
             {
                 game.BringCellToLifeAt(point.X, point.Y);

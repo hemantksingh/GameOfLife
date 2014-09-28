@@ -4,13 +4,9 @@ namespace GameOfLife
 {
     public class Game
     {
-        private readonly ICellFactory _cellFactory;
-
-        public Game(int size, ICellFactory cellFactory)
+        public Game(int size)
         {
-            Size = size;
-            _cellFactory = cellFactory;
-            
+            Size = size;            
             Life = new Cell[Size,Size];
             CreateLife();
         }
@@ -25,7 +21,7 @@ namespace GameOfLife
             {
                 for (int y = 0; y < Size; y++)
                 {
-                    Cell @newCell = _cellFactory.CreateDeadCell(x, y);
+                    Cell @newCell = new Cell(x, y, false);
                     Life[x, y] = @newCell;
                 }
             }
@@ -49,7 +45,7 @@ namespace GameOfLife
 
         public void BringCellToLifeAt(int x, int y)
         {
-            Cell aliveCell = _cellFactory.CreateAliveCell(x, y);
+            Cell aliveCell = new Cell(x, y, true);
             Life[x, y] = aliveCell;
         }
 

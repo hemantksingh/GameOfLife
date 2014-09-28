@@ -2,18 +2,23 @@
 
 namespace GameOfLife
 {
-    public abstract class Cell
+    public class Cell
     {
-        protected Cell(int x, int y)
+        public Cell(int x, int y, bool isAlive)
         {
             X = x;
             Y = y;
+            alive = isAlive;
         }
 
-        public int X { get; private set; }
-        public int Y { get; private set; }
+        public readonly int X;
+        public readonly int Y;
+        private readonly bool alive;
 
-        public abstract bool IsAlive();
+        public bool IsAlive()
+        {
+            return alive;
+        }
 
         /// <summary>
         /// TODO: This can be optimised. Rather than navigating through all the cells in life,
@@ -45,17 +50,33 @@ namespace GameOfLife
 
         public Cell Evolve(int noOfLiveNeighbours)
         {
+            Cell nextCell;
             if (this.IsAlive())
             {
                 if (noOfLiveNeighbours < 2 || noOfLiveNeighbours > 3)
-                    return new DeadCell(X, Y);
+                    nextCell = CreateDeadCell();
+                else
+                    nextCell = CreateLiveCell();
             }
-            else if (noOfLiveNeighbours == 3)
-                return new AliveCell(X, Y);
             else
-                return new DeadCell(X, Y);
-            
-            return new AliveCell(X, Y);
+            {
+                if (noOfLiveNeighbours == 3)
+                    nextCell = CreateLiveCell();
+                else
+                    nextCell = CreateDeadCell();
+            }
+
+            return nextCell;
+        }
+
+        private Cell CreateLiveCell()
+        {
+            return new Cell(X, Y, true);
+        }
+
+        private Cell CreateDeadCell()
+        {
+            return new Cell(X, Y, false);
         }
     }
 }

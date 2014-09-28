@@ -7,7 +7,7 @@ namespace GameOfLife.Test
         [Fact]
         public void CellsCanBeBroughtToLife()
         {
-            var game = new Game(3, new CellFactory());
+            var game = new Game(3);
 
             game.BringCellToLifeAt(0, 0);
             game.BringCellToLifeAt(0, 1);
@@ -24,7 +24,7 @@ namespace GameOfLife.Test
         [Fact]
         public void AnyLiveCellWithMoreThanThreeLiveNeighboursDies()
         {
-            var game = new Game(3, new CellFactory());
+            var game = new Game(3);
 
             game.BringCellToLifeAt(0, 1);
             game.BringCellToLifeAt(0, 2);
@@ -40,7 +40,7 @@ namespace GameOfLife.Test
         [Fact]
         public void AnyLiveCellWithFewerThanTwoLiveNeighboursDies()
         {
-            var game = new Game(3, new CellFactory());
+            var game = new Game(3);
             game.Tick();
 
             Assert.False(game.NextLife[2, 0].IsAlive());
@@ -49,7 +49,7 @@ namespace GameOfLife.Test
         [Fact]
         public void AnyLiveCellWithTwoOrThreeThreeLiveNeighboursLivesOn()
         {
-            var game = new Game(3, new CellFactory());
+            var game = new Game(3);
             game.BringCellToLifeAt(0, 0);
             game.BringCellToLifeAt(0, 1);
             game.BringCellToLifeAt(1, 1);
@@ -64,7 +64,7 @@ namespace GameOfLife.Test
         [Fact]
         public void AnyDeadCellWithExactlyThreeLiveNeighboursBecomesAlive()
         {
-            var game = new Game(3, new CellFactory());
+            var game = new Game(3);
             game.BringCellToLifeAt(0, 0);
             game.BringCellToLifeAt(0, 1);
             game.BringCellToLifeAt(1, 1);
