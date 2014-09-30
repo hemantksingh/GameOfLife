@@ -26,7 +26,7 @@ namespace GameOfLife
         /// </summary>
         public int NoOfLiveNeighbours(Cell[,] life)
         {
-            var liveNeighbours = new List<Cell>();
+            var liveNeighbours = 0;
 
             foreach (Cell cell in life)
             {
@@ -37,10 +37,10 @@ namespace GameOfLife
 
                     if ((xDistanceFromCell == 1 || xDistanceFromCell == 0 || xDistanceFromCell == -1) &&
                         (yDistanceFromCell == 1 || yDistanceFromCell == 0 || yDistanceFromCell == -1))
-                        liveNeighbours.Add(cell);
+                        liveNeighbours++;
                 }
             }
-            return liveNeighbours.Count;
+            return liveNeighbours;
         }
 
         private bool IsSameAs(Cell cell)

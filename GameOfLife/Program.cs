@@ -9,15 +9,18 @@ namespace GameOfLife
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Please enter the number of ticks:");
-            string readLine = Console.ReadLine();
-            int noOfTicks;
-            if (!int.TryParse(readLine, out noOfTicks))
+            int noOfTicks; string readLine;
+            
+            do
             {
-                Console.WriteLine("'{0}' is an invalid number.", readLine);
-                Console.Read();
-                return;
-            }
+                Console.WriteLine("Please enter the number of ticks:");
+                readLine = Console.ReadLine();
+                if (!int.TryParse(readLine, out noOfTicks))
+                {
+                    Console.WriteLine("'{0}' is not a valid number.", readLine);
+                }
+            } while (!int.TryParse(readLine, out noOfTicks));
+            
             
             var game = new Game(60);
             foreach (Point point in GetSeed())
