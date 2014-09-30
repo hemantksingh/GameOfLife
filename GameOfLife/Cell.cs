@@ -50,9 +50,33 @@ namespace GameOfLife
 
         public Cell Evolve(int noOfLiveNeighbours)
         {
-            if (noOfLiveNeighbours < 2 || noOfLiveNeighbours > 3)
-                return new Cell(X, Y, false);
+            Cell nextCell;
+            if (this.IsAlive())
+            {
+                if (noOfLiveNeighbours < 2 || noOfLiveNeighbours > 3)
+                    nextCell = CreateDeadCell();
+                else
+                    nextCell = CreateLiveCell();
+            }
+            else
+            {
+                if (noOfLiveNeighbours == 3)
+                    nextCell = CreateLiveCell();
+                else
+                    nextCell = CreateDeadCell();
+            }
+
+            return nextCell;
+        }
+
+        private Cell CreateLiveCell()
+        {
             return new Cell(X, Y, true);
+        }
+
+        private Cell CreateDeadCell()
+        {
+            return new Cell(X, Y, false);
         }
     }
 }
