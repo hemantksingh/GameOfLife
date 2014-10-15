@@ -15,11 +15,11 @@ namespace GameOfLife
             {
                 Console.WriteLine("Please enter the number of ticks:");
                 readLine = Console.ReadLine();
-                if (!int.TryParse(readLine, out noOfTicks))
+                if (!IsValidNumber(readLine, out noOfTicks))
                 {
                     Console.WriteLine("'{0}' is not a valid number.", readLine);
                 }
-            } while (!int.TryParse(readLine, out noOfTicks));
+            } while (!IsValidNumber(readLine, out noOfTicks));
             
             
             var game = new Game(60);
@@ -37,6 +37,11 @@ namespace GameOfLife
             }
             
             Console.ReadKey();
+        }
+
+        private static bool IsValidNumber(string input, out int noOfTicks)
+        {
+            return int.TryParse(input, out noOfTicks);
         }
 
         private static IEnumerable<Point> GetSeed()

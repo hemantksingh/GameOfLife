@@ -13,9 +13,9 @@ namespace GameOfLife.Test
             game.BringCellToLifeAt(0, 1);
             game.BringCellToLifeAt(1, 1);
 
-            Assert.True(game.Life[0, 0].IsAlive());
-            Assert.True(game.Life[0, 1].IsAlive());
-            Assert.True(game.Life[1, 1].IsAlive());
+            Assert.True(game.Life[0, 0].IsAlive);
+            Assert.True(game.Life[0, 1].IsAlive);
+            Assert.True(game.Life[1, 1].IsAlive);
         }
     }
 
@@ -34,7 +34,7 @@ namespace GameOfLife.Test
 
             game.Tick();
 
-            Assert.False(game.NextLife[1, 1].IsAlive());
+            Assert.False(game.NextLife[1, 1].IsAlive);
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace GameOfLife.Test
             var game = new Game(3);
             game.Tick();
 
-            Assert.False(game.NextLife[2, 0].IsAlive());
+            Assert.False(game.NextLife[2, 0].IsAlive);
         }
 
         [Fact]
@@ -56,9 +56,9 @@ namespace GameOfLife.Test
 
             game.Tick();
 
-            Assert.True(game.NextLife[0, 0].IsAlive());
-            Assert.True(game.NextLife[0, 1].IsAlive());
-            Assert.True(game.NextLife[1, 1].IsAlive());
+            Assert.True(game.NextLife[0, 0].IsAlive);
+            Assert.True(game.NextLife[0, 1].IsAlive);
+            Assert.True(game.NextLife[1, 1].IsAlive);
         }
 
         [Fact]
@@ -70,7 +70,7 @@ namespace GameOfLife.Test
             game.BringCellToLifeAt(1, 1);
 
             game.Tick();
-            Assert.True(game.NextLife[1, 0].IsAlive());
+            Assert.True(game.NextLife[1, 0].IsAlive);
         }
     }
 }

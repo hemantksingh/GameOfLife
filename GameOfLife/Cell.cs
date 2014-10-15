@@ -6,52 +6,55 @@ namespace GameOfLife
     {
         public Cell(int x, int y, bool isAlive)
         {
-            X = x;
-            Y = y;
-            alive = isAlive;
+            this.x = x;
+            this.y = y;
+            this.IsAlive = isAlive;
         }
 
-        public readonly int X;
-        public readonly int Y;
-        private readonly bool alive;
+        private readonly int x;
+        private readonly int y;
+        public readonly bool IsAlive;
 
-        public bool IsAlive()
-        {
-            return alive;
-        }
 
         /// <summary>
         /// TODO: This can be optimised. Rather than navigating through all the cells in life,
         /// there must be a clever way of narrowing down the number of cells to navigate.
         /// </summary>
-        public int NoOfLiveNeighbours(Cell[,] life)
+        internal int NoOfLiveNeighbours(Cell[,] life)
         {
-            var liveNeighbours = 0;
-
+            int noOfLiveNeighbours = 0;
             foreach (Cell cell in life)
             {
-                if (cell.IsAlive() && !cell.IsSameAs(this))
-                {
-                    int xDistanceFromCell = X - cell.X;
-                    int yDistanceFromCell = Y - cell.Y;
-
-                    if ((xDistanceFromCell == 1 || xDistanceFromCell == 0 || xDistanceFromCell == -1) &&
-                        (yDistanceFromCell == 1 || yDistanceFromCell == 0 || yDistanceFromCell == -1))
-                        liveNeighbours++;
-                }
+                if (cell.IsAlive && this.IsANeighbourOf(cell))
+                    noOfLiveNeighbours++;
             }
-            return liveNeighbours;
+            return noOfLiveNeighbours;
+        }
+
+        private bool IsANeighbourOf(Cell cell)
+        {
+            if (this.IsSameAs(cell)) return false;
+
+            Cell distance = this.DistanceFrom(cell);
+            return (distance.x == 0 || distance.x == -1 || distance.x == 1)
+                        && (distance.y == 0 || distance.y == -1 || distance.y == 1);
+        }
+
+
+        private Cell DistanceFrom(Cell cell)
+        {
+            return new Cell(this.x - cell.x, this.y - cell.y, cell.IsAlive);
         }
 
         private bool IsSameAs(Cell cell)
         {
-            return cell.X == this.X && cell.Y == this.Y;
+            return this.x == cell.x && this.y == cell.y;
         }
 
         public Cell Evolve(int noOfLiveNeighbours)
         {
             Cell nextCell;
-            if (this.IsAlive())
+            if (this.IsAlive)
             {
                 if (noOfLiveNeighbours < 2 || noOfLiveNeighbours > 3)
                     nextCell = CreateDeadCell();
@@ -71,12 +74,12 @@ namespace GameOfLife
 
         private Cell CreateLiveCell()
         {
-            return new Cell(X, Y, true);
+            return new Cell(x, y, true);
         }
 
         private Cell CreateDeadCell()
         {
-            return new Cell(X, Y, false);
+            return new Cell(x, y, false);
         }
     }
 }

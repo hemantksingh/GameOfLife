@@ -56,7 +56,7 @@ namespace GameOfLife
             {
                 for (int y = 0; y < Size; y++)
                 {
-                    builder.Append(Life[x, y].IsAlive() ? "*" : " ");
+                    builder.Append(Life[x, y].IsAlive ? "*" : " ");
                 }
                 builder.AppendLine();
             }
