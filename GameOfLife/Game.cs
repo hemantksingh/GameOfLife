@@ -36,8 +36,7 @@ namespace GameOfLife
                 for (int y = 0; y < Size; y++)
                 {
                     Cell cell = Life[x, y];
-                    int noOfLiveNeighbours = cell.NoOfLiveNeighbours(Life);
-                    NextLife[x, y] = cell.Evolve(noOfLiveNeighbours);
+                    NextLife[x, y] = cell.EvolveFrom(Life);
                 }
             }
             Life = NextLife;

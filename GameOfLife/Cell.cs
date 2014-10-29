@@ -1,31 +1,24 @@
-﻿using System.Collections.Generic;
-
-namespace GameOfLife
+﻿namespace GameOfLife
 {
     public class Cell
     {
+        public readonly bool IsAlive;
+        private readonly int _x;
+        private readonly int _y;
+
         public Cell(int x, int y, bool isAlive)
         {
-            this.x = x;
-            this.y = y;
-            this.IsAlive = isAlive;
+            _x = x;
+            _y = y;
+            IsAlive = isAlive;
         }
 
-        private readonly int x;
-        private readonly int y;
-        public readonly bool IsAlive;
-
-
-        /// <summary>
-        /// TODO: This can be optimised. Rather than navigating through all the cells in life,
-        /// there must be a clever way of narrowing down the number of cells to navigate.
-        /// </summary>
-        internal int NoOfLiveNeighbours(Cell[,] life)
+        private int NoOfLiveNeighbours(Cell[,] life)
         {
             int noOfLiveNeighbours = 0;
             foreach (Cell cell in life)
             {
-                if (cell.IsAlive && this.IsANeighbourOf(cell))
+                if (cell.IsAlive && IsANeighbourOf(cell))
                     noOfLiveNeighbours++;
             }
             return noOfLiveNeighbours;
@@ -33,28 +26,29 @@ namespace GameOfLife
 
         private bool IsANeighbourOf(Cell cell)
         {
-            if (this.IsSameAs(cell)) return false;
+            if (IsSameAs(cell)) return false;
 
-            Cell distance = this.DistanceFrom(cell);
-            return (distance.x == 0 || distance.x == -1 || distance.x == 1)
-                        && (distance.y == 0 || distance.y == -1 || distance.y == 1);
+            Cell distance = DistanceFrom(cell);
+            return (distance._x == 0 || distance._x == -1 || distance._x == 1)
+                   && (distance._y == 0 || distance._y == -1 || distance._y == 1);
         }
 
 
         private Cell DistanceFrom(Cell cell)
         {
-            return new Cell(this.x - cell.x, this.y - cell.y, cell.IsAlive);
+            return new Cell(_x - cell._x, _y - cell._y, cell.IsAlive);
         }
 
         private bool IsSameAs(Cell cell)
         {
-            return this.x == cell.x && this.y == cell.y;
+            return _x == cell._x && _y == cell._y;
         }
 
-        public Cell Evolve(int noOfLiveNeighbours)
+        public Cell EvolveFrom(Cell[,] life)
         {
             Cell nextCell;
-            if (this.IsAlive)
+            int noOfLiveNeighbours = NoOfLiveNeighbours(life);
+            if (IsAlive)
             {
                 if (noOfLiveNeighbours < 2 || noOfLiveNeighbours > 3)
                     nextCell = CreateDeadCell();
@@ -63,10 +57,7 @@ namespace GameOfLife
             }
             else
             {
-                if (noOfLiveNeighbours == 3)
-                    nextCell = CreateLiveCell();
-                else
-                    nextCell = CreateDeadCell();
+                nextCell = noOfLiveNeighbours == 3 ? CreateLiveCell() : CreateDeadCell();
             }
 
             return nextCell;
@@ -74,12 +65,12 @@ namespace GameOfLife
 
         private Cell CreateLiveCell()
         {
-            return new Cell(x, y, true);
+            return new Cell(_x, _y, true);
         }
 
         private Cell CreateDeadCell()
         {
-            return new Cell(x, y, false);
+            return new Cell(_x, _y, false);
         }
     }
 }
